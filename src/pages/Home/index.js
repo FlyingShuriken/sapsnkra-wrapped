@@ -1,5 +1,4 @@
 // import { useState, useEffect, useRef } from "react";
-// import axios from 'axios';
 
 import "./index.css";
 import IC from "./components/ic";

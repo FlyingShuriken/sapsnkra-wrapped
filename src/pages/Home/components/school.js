@@ -1,5 +1,4 @@
 import SelectSearch from 'react-select-search';
-// import "./style.css" from 'react-select-search';
 
 const School = () => {
 
@@ -18,7 +17,7 @@ const School = () => {
                 });
             }}}
             search
-            placeholder="Your favorite drink"
+            placeholder="Search Your School (support: School Code, Schoo Name, School Poscode)"
         />
     );
 };

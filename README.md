@@ -1,4 +1,4 @@
-# SAPS-WRAPPED
+# SAPSNKRA-WRAPPED
 
 A web UI for those who can't visit the SAPSNKRA IBUBAPA web page.
 
@@ -14,7 +14,9 @@ BACKEND : Python, Flask, Flask-RESTX
 3. Run
 
 ```bash
+npm install
 npm run build
+pip install -r requirements.txt
 python app.py
 ```
 
