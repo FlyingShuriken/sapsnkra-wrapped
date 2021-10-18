@@ -56,3 +56,13 @@ class search(Resource):
                             "poscode": row[2]
                         })
             return res
+
+
+@api.route('/v1/checkStudentValid/<string:school>/<string:id>')
+class checkID(Resource):
+    def get(self, school, id):
+        print(school, id)
+        url = f'https://sapsnkra.moe.gov.my/ajax/papar_carianpelajar.php?nokp={id}&kodsek={school}'
+        with urllib.request.urlopen(url) as response:
+            html = response.read().decode("utf-8").replace("\n", "").replace(" ", "")
+        return {"status": html}

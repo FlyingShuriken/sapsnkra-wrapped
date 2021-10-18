@@ -3,6 +3,7 @@
 import "./index.css";
 import IC from "./components/ic";
 import School from "./components/school";
+import Inputs from "./components/inputs";
 
 const Home = () => {
 
@@ -10,6 +11,7 @@ const Home = () => {
         <div class="main">
             <IC/>
             <div class="m-3"><School /></div>
+            <Inputs />
         </div>
     );
 };
