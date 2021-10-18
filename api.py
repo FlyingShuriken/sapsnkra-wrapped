@@ -1,11 +1,13 @@
-from flask import Blueprint
+from flask import Blueprint, render_template_string
 from flask_restx import Resource, Api, reqparse
 
 import urllib
 import csv
+import json
 
 blueprint = Blueprint(__name__, "api")
 api = Api(blueprint)
+parser = reqparse.RequestParser()
 
 
 @api.route('/v1/checkID/<string:id>')
@@ -66,3 +68,25 @@ class checkID(Resource):
         with urllib.request.urlopen(url) as response:
             html = response.read().decode("utf-8").replace("\n", "").replace(" ", "")
         return {"status": html}
+
+
+@api.route('/v1/check')
+class check(Resource):
+    def post(self):
+        parser.add_argument('nokp', type=str)
+        parser.add_argument('kodsek', type=str)
+        parser.add_argument('ting', type=str)
+        parser.add_argument('kelas', type=str)
+        parser.add_argument('cboPep', type=str)
+        args = parser.parse_args()
+        print(args)
+        url = f'https://sapsnkra.moe.gov.my/ibubapa2/slipsr.php'
+        data = json.dumps(args)
+        data = str(data)
+        data = data.encode('utf-8')
+        print(data)
+        req = urllib.request.Request(url, data=data)
+        resp = urllib.request.urlopen(
+            req).read().decode("utf-8").replace('"', "'").replace("\n", "")
+        print(resp)
+        return render_template_string(resp)
