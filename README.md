@@ -21,3 +21,7 @@ python app.py
 ```
 
 4. Visit [http://localhost:5000](http://localhost:5000)
+
+### Other
+
+Inspired by [samsam's repo](https://github.com/samleong123/sapsnkra-check-results)
