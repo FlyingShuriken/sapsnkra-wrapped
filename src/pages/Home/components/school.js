@@ -43,7 +43,7 @@ const School = () => {
                     });
                 }}}
                 search
-                renderValue={(valueProps) => <input {...valueProps} tabindex="0" autocomplete="on" class="select-search__input" name="kodsek" />}
+                renderValue={(valueProps) => <input {...valueProps} tabindex="0" class="select-search__input" name="kodsek" autoComplete="off"/>}
                 placeholder="Search Your School (support: School Code, School Name, School Poscode)"
             />
                 <strong class="check-school-danger text-danger visually-hidden">You have no data in this school</strong>
