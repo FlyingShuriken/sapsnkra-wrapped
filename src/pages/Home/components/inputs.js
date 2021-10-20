@@ -31,6 +31,8 @@ const Inputs= () => {
             <input autoComplete="off" type="text" aria-label="Kelas" class="form-control" id="kelas" name="kelas" onInput={kelasupper}></input>
             <span>Jenis Peperiksaan(eg.<br></br>1. PEPERIKSAAN PERTENGAHAN TAHUN = PPT, <br></br>2. PEPERIKSAAN AKHIR TAHUN = PAT , <br></br>3. UPSR = UPSRC, <br></br>4. Ujian 1 = U1</span>
             <input autoComplete="off" type="text" aria-label="Jenis Peperiksaan" class="form-control" id="cboPep" name="cboPep" onInput={cbopepupper}></input>
+            <input type="hidden" name="jpep2" value ="Papar Slip Keputusan"></input>
+            <input type="hidden" name="analisis2" value ="Papar Markah Peperiksaan"></input>
         </div>
     );
 };
