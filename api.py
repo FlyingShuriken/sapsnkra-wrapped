@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template_string
+from flask import Blueprint, render_template
 from flask_restx import Resource, Api, reqparse
 
 import urllib
@@ -72,7 +72,27 @@ class checkID(Resource):
         return {"status": html}
 
 
-@api.route('/v1/check')
+@api.route('/v1/check/<string:kodsek>/<string:tahun>/<string:ting>/<string:kelas>/<string:nokp>/<string:cboPep>')
 class check(Resource):
-    def get(self):
-        return {}
+    def get(self, kodsek, tahun, ting, kelas, nokp, cboPep):
+        url = f'https://sapsnkra.moe.gov.my/ajax/papar_btn.php?nokp={nokp}&kodsek={kodsek}&ting={ting}&kelas={kelas}&tahun={tahun}&jpep={cboPep}'
+        with urllib.request.urlopen(url, context=context) as response:
+            cookies = [i.split(";")[0]
+                       for i in response.info().get_all("Set-Cookie")]
+            cookies_dict = ""
+            for i in cookies:
+                cookies_dict += f'{i}; '
+            cookies_dict = cookies_dict[:-2]
+        url = f'https://sapsnkra.moe.gov.my/ibubapa2/slipmr.php'
+        data = {
+            "nokp": nokp,
+            "kodsek": kodsek,
+            "ting": ting,
+            "kelas": kelas,
+            "cboPep": cboPep
+        }
+        data = urllib.parse.urlencode(data).encode()
+        req = urllib.request.Request(url, data=data, headers={
+                                     "Cookie": cookies_dict})
+        resp = urllib.request.urlopen(req).read().decode("utf-8")
+        return {"res": resp}

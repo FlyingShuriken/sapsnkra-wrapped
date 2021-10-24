@@ -29,6 +29,8 @@ const Inputs= () => {
             <input autoComplete="off" type="text" aria-label="Darjah/Tingkatan" class="form-control" id="ting" name="ting" onInput={tingupper}></input>
             <span>Kelas(eg.APPLE, HIGH_RAJIN)</span>
             <input autoComplete="off" type="text" aria-label="Kelas" class="form-control" id="kelas" name="kelas" onInput={kelasupper}></input>
+            <span>Tahun(eg.2017,2018)</span>
+            <input autoComplete="off" type="number" aria-label="Tahun" class="form-control" id="tahun" name="tahun"></input>
             <span>Jenis Peperiksaan(eg.<br></br>1. PEPERIKSAAN PERTENGAHAN TAHUN = PPT, <br></br>2. PEPERIKSAAN AKHIR TAHUN = PAT , <br></br>3. UPSR = UPSRC, <br></br>4. Ujian 1 = U1</span>
             <input autoComplete="off" type="text" aria-label="Jenis Peperiksaan" class="form-control" id="cboPep" name="cboPep" onInput={cbopepupper}></input>
         </div>
