@@ -4,17 +4,19 @@ from flask_restx import Resource, Api, reqparse
 import urllib
 import csv
 import json
+import ssl
 
 blueprint = Blueprint(__name__, "api")
 api = Api(blueprint)
 parser = reqparse.RequestParser()
+context = ssl._create_unverified_context()
 
 
 @api.route('/v1/checkID/<string:id>')
 class checkID(Resource):
     def get(self, id):
         url = f'https://sapsnkra.moe.gov.my/ajax/papar_carian.php?nokp={id}'
-        with urllib.request.urlopen(url) as response:
+        with urllib.request.urlopen(url, context=context) as response:
             html = response.read().decode("utf-8").replace("\n", "").replace(" ", "")
         return {'id': html}
 
@@ -65,28 +67,12 @@ class checkID(Resource):
     def get(self, school, id):
         print(school, id)
         url = f'https://sapsnkra.moe.gov.my/ajax/papar_carianpelajar.php?nokp={id}&kodsek={school}'
-        with urllib.request.urlopen(url) as response:
+        with urllib.request.urlopen(url, context=context) as response:
             html = response.read().decode("utf-8").replace("\n", "").replace(" ", "")
         return {"status": html}
 
 
 @api.route('/v1/check')
 class check(Resource):
-    def post(self):
-        parser.add_argument('nokp', type=str)
-        parser.add_argument('kodsek', type=str)
-        parser.add_argument('ting', type=str)
-        parser.add_argument('kelas', type=str)
-        parser.add_argument('cboPep', type=str)
-        args = parser.parse_args()
-        print(args)
-        url = f'https://sapsnkra.moe.gov.my/ibubapa2/slipsr.php'
-        data = json.dumps(args)
-        data = str(data)
-        data = data.encode('utf-8')
-        print(data)
-        req = urllib.request.Request(url, data=data)
-        resp = urllib.request.urlopen(
-            req).read().decode("utf-8").replace('"', "'").replace("\n", "")
-        print(resp)
-        return render_template_string(resp)
+    def get(self):
+        return {}
