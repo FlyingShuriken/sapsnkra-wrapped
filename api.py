@@ -95,5 +95,5 @@ class check(Resource):
         req = urllib.request.Request(url, data=data, headers={
                                      "Cookie": cookies_dict})
         resp = urllib.request.urlopen(
-            req, contest=context).read().decode("utf-8")
+            req, context=context).read().decode("utf-8")
         return {"res": resp}
