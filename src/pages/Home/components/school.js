@@ -21,6 +21,11 @@ const School = () => {
                     obj.classList.add("is-valid");
                     obj.classList.remove("is-invalid");
                     document.getElementsByClassName("check-school-danger")[0].classList.add("visually-hidden");
+                    fetch(`/api/v1/checkValidYear/${ic}`)
+                        .then(response => response.json())
+                        .then(({status}) => {
+                            document.getElementById("tahunc").innerHTML = status.match(/<option(.*)<\/option>/g)[1]
+                        })
                 }
             })
     }
@@ -43,7 +48,7 @@ const School = () => {
                     });
                 }}}
                 search
-                renderValue={(valueProps) => <input {...valueProps} tabindex="0" class="select-search__input" name="kodsek" autoComplete="off"/>}
+                renderValue={(valueProps) => <input {...valueProps} tabindex="0" class="select-search__input" autoComplete="off"/>}
                 placeholder="Search Your School (support: School Code, School Name, School Poscode)"
             />
                 <strong class="check-school-danger text-danger visually-hidden">You have no data in this school</strong>

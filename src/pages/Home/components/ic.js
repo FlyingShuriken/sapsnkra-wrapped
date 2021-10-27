@@ -23,7 +23,7 @@ const IC = () => {
         <div class="main m-3">
             <strong>This project is still on development. Use it at your own risk!</strong>
             <div class="form-floating mb-3 m-1">
-                <input type="text" class="form-control check-id" id="floatingInput" placeholder="Your IC Number" onInput={checkID} name="nokp" autoComplete="off"></input>
+                <input type="text" class="form-control check-id" id="floatingInput" placeholder="Your IC Number" onInput={checkID} name="nokpc" autoComplete="off"></input>
                 <label for="floatingInput">Your IC Number</label>
                 <strong class="check-id-danger text-danger visually-hidden">Invalid IC Number</strong>
             </div>

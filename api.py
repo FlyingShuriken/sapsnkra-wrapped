@@ -3,8 +3,8 @@ from flask_restx import Resource, Api, reqparse
 
 import urllib
 import csv
-import json
 import ssl
+from re import findall
 
 blueprint = Blueprint(__name__, "api")
 api = Api(blueprint)
@@ -72,10 +72,10 @@ class checkID(Resource):
         return {"status": html}
 
 
-@api.route('/v1/check/<string:kodsek>/<string:tahun>/<string:ting>/<string:kelas>/<string:nokp>/<string:cboPep>')
-class check(Resource):
-    def get(self, kodsek, tahun, ting, kelas, nokp, cboPep):
-        url = f'https://sapsnkra.moe.gov.my/ajax/papar_btn.php?nokp={nokp}&kodsek={kodsek}&ting={ting}&kelas={kelas}&tahun={tahun}&jpep={cboPep}'
+@api.route("/v1/checkValidYear/<string:nokp>")
+class checkYear(Resource):
+    def get(self, nokp):
+        url = f'https://sapsnkra.moe.gov.my/ajax/papar_carian.php?nokp={nokp}'
         with urllib.request.urlopen(url, context=context) as response:
             cookies = [i.split(";")[0]
                        for i in response.info().get_all("Set-Cookie")]
@@ -83,7 +83,48 @@ class check(Resource):
             for i in cookies:
                 cookies_dict += f'{i}; '
             cookies_dict = cookies_dict[:-2]
-        url = f'https://sapsnkra.moe.gov.my/ibubapa2/slipmr.php'
+        url = "https://sapsnkra.moe.gov.my/ibubapa2/semak.php"
+        req = urllib.request.Request(url, headers={
+                                     "Cookie": cookies_dict})
+        resp = urllib.request.urlopen(
+            req, context=context).read().decode("utf-8").replace("\n", "")
+        return {"status": resp}
+
+
+@api.route("/v1/checkClassAndPaper/<string:nokp>/<string:tahun>")
+class checkClassAndPaper(Resource):
+    def get(self, nokp, tahun):
+        url = f'https://sapsnkra.moe.gov.my/ajax/papar_carian.php?nokp={nokp}'
+        with urllib.request.urlopen(url, context=context) as response:
+            cookies = [i.split(";")[0]
+                       for i in response.info().get_all("Set-Cookie")]
+            cookies_dict = ""
+            for i in cookies:
+                cookies_dict += f'{i}; '
+            cookies_dict = cookies_dict[:-2]
+        url = f"https://sapsnkra.moe.gov.my/ajax/maklumat_pelajar.php?tahun={tahun}"
+        req = urllib.request.Request(url, headers={
+                                     "Cookie": cookies_dict})
+        resp = urllib.request.urlopen(
+            req, context=context).read().decode("utf-8").replace("\n", "")
+        return {"status": resp}
+
+
+@api.route('/v1/check/<string:kodsek>/<string:tahun>/<string:ting>/<string:kelas>/<string:nokp>/<string:cboPep>')
+class check(Resource):
+    def get(self, kodsek, tahun, ting, kelas, nokp, cboPep):
+        url = f'https://sapsnkra.moe.gov.my/ajax/papar_btn.php?nokp={nokp}&kodsek={kodsek}&ting={ting}&kelas={kelas}&tahun={tahun}&jpep={cboPep}'
+        with urllib.request.urlopen(url, context=context) as response:
+            html = response.read().decode("utf-8")
+            page = findall(r",'(.*)'\)", html)[0]
+            print(page)
+            cookies = [i.split(";")[0]
+                       for i in response.info().get_all("Set-Cookie")]
+            cookies_dict = ""
+            for i in cookies:
+                cookies_dict += f'{i}; '
+            cookies_dict = cookies_dict[:-2]
+        url = f'https://sapsnkra.moe.gov.my/ibubapa2/{page}'
         data = {
             "nokp": nokp,
             "kodsek": kodsek,
