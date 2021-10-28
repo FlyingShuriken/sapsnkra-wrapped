@@ -22,6 +22,8 @@ const IC = () => {
     return (
         <div class="main m-3">
             <strong>This project is still on development. Use it at your own risk!</strong>
+            <strong>We will not record your data..</strong>
+            <strong>Slow response and long loading time are due to the sapsnkra website. Sorry for causing any inconvenience.</strong>
             <div class="form-floating mb-3 m-1">
                 <input type="text" class="form-control check-id" id="floatingInput" placeholder="Your IC Number" onInput={checkID} name="nokpc" autoComplete="off"></input>
                 <label for="floatingInput">Your IC Number</label>

@@ -15,7 +15,7 @@ const Home = () => {
                 <IC/>
                 <div class="m-3"><School /></div>
                 <Inputs />
-                <div class="d-flex align-items-center visually-hidden" id="loading-d">
+                <div class="d-flex align-items-center visually-hidden mx-3" id="loading-d">
                     <strong>Loading...</strong>
                     <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
                 </div>

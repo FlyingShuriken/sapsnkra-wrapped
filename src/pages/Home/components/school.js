@@ -8,9 +8,11 @@ const School = () => {
         setSchool(self)
         console.log(self)
         const ic = document.getElementsByClassName("check-id")[0].value
+        document.getElementById("loading-d").classList.remove("visually-hidden");
         fetch(`/api/v1/checkStudentValid/${self}/${ic}`)
             .then(response => response.json())
             .then(({status}) => {
+                document.getElementById("loading-d").classList.add("visually-hidden");
                 console.log(status)
                 const obj = document.getElementsByClassName("select-search__input")[0];
                 if(status === "TidakWujud") {
@@ -25,6 +27,7 @@ const School = () => {
                         .then(response => response.json())
                         .then(({status}) => {
                             document.getElementById("tahunc").innerHTML = status.match(/<option(.*)<\/option>/g)[1]
+                            document.getElementById("tahunc").disabled = false;
                         })
                 }
             })

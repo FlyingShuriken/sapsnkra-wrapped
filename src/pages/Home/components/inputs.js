@@ -5,9 +5,11 @@ const Inputs= () => {
     const checkClassAndPaper = () => {
         const nokp = document.getElementsByClassName("check-id")[0].value;
         const self = document.getElementById("tahunc").value;
+        document.getElementById("loading-d").classList.remove("visually-hidden");
         fetch(`/api/v1/checkClassAndPaper/${nokp}/${self}`)
             .then(response => response.json())
             .then(({status}) => {
+                document.getElementById("loading-d").classList.add("visually-hidden");
                 if(status.replace(/ /g,"")==="TidakWujud") {
                     document.getElementsByClassName("check-age-danger")[0].classList.remove("visually-hidden")
                     document.getElementsByClassName("tingc")[0].innerHTML = "";
@@ -30,6 +32,7 @@ const Inputs= () => {
                     inv_arr += `<input type="hidden" name="kelas" id="kelas" value="${arr[3]}">`
                     inv_arr += `<input type="hidden" name="tahun" id="tahun" value="${arr[4]}">`
                     document.getElementById("f-value").innerHTML = inv_arr
+                    document.getElementById("cboPep").disabled = false;
                     const obj = document.getElementsByClassName("select-search__input")[0];
                     const x = document.forms[0]["kodsek"].value;
                     obj.value = x.split(" ")[0]
@@ -65,13 +68,13 @@ const Inputs= () => {
     return (
         <div class="m-3">
             <span>Tahun:</span>
-            <select class="form-select mb-2" id="tahunc" name="tahunc" aria-label="Tahun" onChange={checkClassAndPaper}></select>
+            <select class="form-select mb-2" disabled id="tahunc" name="tahunc" aria-label="Tahun" onChange={checkClassAndPaper}></select>
             <strong class="check-age-danger text-danger visually-hidden">No data is recorded in this year</strong>
             <p>Tahun/Tingkatan: <p class="tingc m-0"></p></p>
             <p>Kelas: <p class="kelasc m-0"></p></p>
             <span>Jenis Peperiksaan: </span>
             <div id="f-value"></div>
-            <select class="form-select" id="cboPep" name="cboPep" aria-label="Peperiksaan" onChange={fetchIfValid}></select>
+            <select class="form-select" disabled id="cboPep" name="cboPep" aria-label="Peperiksaan" onChange={fetchIfValid}></select>
         </div>
     );
 };
