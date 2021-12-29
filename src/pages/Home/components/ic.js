@@ -3,13 +3,13 @@ const IC = () => {
     const checkID = async () => {
         const obj = document.getElementsByClassName("check-id")[0];
         const id = obj.value
-        if(id.length === 12) {
+        if (id.length === 12) {
             const req = await fetch(`/api/v1/checkID/${id}`);
             const res = await req.json();
-            if(res.id === "TidakWujud") {
+            if (res.id === "TidakWujud") {
                 obj.classList.add("is-invalid");
                 document.getElementsByClassName("check-id-danger")[0].classList.remove("visually-hidden");
-            }else if(res.id === "Wujud") {
+            } else if (res.id === "Wujud") {
                 obj.classList.add("is-valid");
             }
         } else {
@@ -22,7 +22,7 @@ const IC = () => {
     return (
         <div class="main m-3">
             <strong>This project is still on development. Use it at your own risk!</strong>
-            <strong>We will not record your data..</strong>
+            <strong>We will not record your data.</strong>
             <strong>Slow response and long loading time are due to the sapsnkra website. Sorry for causing any inconvenience.</strong>
             <div class="form-floating mb-3 m-1">
                 <input type="text" class="form-control check-id" id="floatingInput" placeholder="Your IC Number" onInput={checkID} name="nokpc" autoComplete="off"></input>
